@@ -1,12 +1,12 @@
 {
   "version": "7",
-  "dialect": "postgresql",
+  "dialect": "sqlite",
   "entries": [
     {
       "idx": 0,
-      "version": "7",
-      "when": 1734492918181,
-      "tag": "0000_panoramic_dexter_bennett",
+      "version": "6",
+      "when": 1734656215835,
+      "tag": "0000_new_natasha_romanoff",
       "breakpoints": true
     }
   ]
