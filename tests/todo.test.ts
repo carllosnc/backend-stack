@@ -8,13 +8,13 @@ const MOCK_ENV = {
 }
 
 describe('/todos', () => {
-  test('Should get all users', async () => {
+  test('Should get all todos', async () => {
     const res = await app.request('/todos', {}, MOCK_ENV)
 
     expect(res.status).toBe(200)
   })
 
-  test('Should create a new user', async () => {
+  test('Should create a new todo', async () => {
     const res = await app.request('/todos', {
       method: 'POST',
       body: JSON.stringify({
@@ -26,8 +26,6 @@ describe('/todos', () => {
     }, MOCK_ENV)
 
     const body = await res.json()
-
-    console.log(body)
 
     expect(res.status).toBe(201)
   })
