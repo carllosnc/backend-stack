@@ -7,25 +7,28 @@ const MOCK_ENV = {
   TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL
 }
 
-describe('/users', () => {
+describe('/todos', () => {
   test('Should get all users', async () => {
-    const res = await app.request('/users', {}, MOCK_ENV)
+    const res = await app.request('/todos', {}, MOCK_ENV)
+
     expect(res.status).toBe(200)
   })
 
   test('Should create a new user', async () => {
-    const res = await app.request('/users', {
+    const res = await app.request('/todos', {
       method: 'POST',
       body: JSON.stringify({
-        name: faker.person.fullName(),
-        age: faker.number.int({ min: 18, max: 80 }),
-        email: faker.internet.email(),
-        address: faker.location.streetAddress()
+        title: faker.word.words(5),
       }),
       headers: {
         'Content-Type': 'application/json'
       }
     }, MOCK_ENV)
+
+    const body = await res.json()
+
+    console.log(body)
+
     expect(res.status).toBe(201)
   })
 })
