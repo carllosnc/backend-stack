@@ -1,5 +1,5 @@
 import { drizzle } from 'drizzle-orm/libsql';
-import { todoTable } from '../../db/schema'
+import { todoTable } from '../../db/todo-schema'
 import { bodyValidator, idValidator } from './todo.validator'
 import { eq } from 'drizzle-orm'
 import { Hono } from 'hono'
