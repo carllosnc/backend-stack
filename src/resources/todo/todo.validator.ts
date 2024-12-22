@@ -8,4 +8,9 @@ export const bodyValidator = zValidator(
   })
 )
 
-export const idValidator = zValidator('param', z.object({ id: z.number() }))
+export const idValidator = zValidator(
+  'param',
+  z.object({
+    id: z.number()
+  })
+)
