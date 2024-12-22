@@ -3,12 +3,13 @@
 What's inside?
 
 - Bun
-- Turso
+- Turso Database
 - Cloudflare Workers
 - Drizzle ORM
 - Hono
 - Zod
 - Drizzle
+- Better Auth
 
 ## Installation
 
@@ -19,13 +20,20 @@ Before start install **Bun** and **Turso**
 
 ## Settings
 
-Create a `.env` file in the root of the project with the following variables:
+Create a `.env` and a `.dev.vars` file in the root of the project with the following variables:
 
-User `.evn.example` as a template: `cp .env.example .env`.
-
+**.env**
 ```sh
 TURSO_DATABASE_URL="..."
 TURSO_AUTH_TOKEN="..."
+```
+
+**.dev.vars**
+```sh
+TURSO_DATABASE_URL="..."
+TURSO_AUTH_TOKEN="..."
+BETTER_AUTH_SECRET="..."
+BETTER_AUTH_URL="..."
 ```
 
 ## Development
