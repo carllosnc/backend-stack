@@ -1,5 +1,5 @@
 {
-  "name": "cworker",
+  "name": "yy-back",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
