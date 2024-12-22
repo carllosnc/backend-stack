@@ -2,6 +2,8 @@ import 'dotenv/config';
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { drizzle } from 'drizzle-orm/libsql';
+import { account, user, verification, session } from './db/auth-schema';
+import { origins } from './settings/origins'
 
 export function betterAuthSettings(tursoUrl: string, tursoToken: string) {
   const db = drizzle({ connection: {
@@ -10,8 +12,20 @@ export function betterAuthSettings(tursoUrl: string, tursoToken: string) {
   }})
 
   return betterAuth({
+    emailAndPassword: {
+      enabled: true,
+    },
+    trustedOrigins: [
+      ...origins
+    ],
     database: drizzleAdapter(db, {
-        provider: "sqlite", // or "mysql", "sqlite"
+      schema: {
+        account,
+        user,
+        verification,
+        session
+      },
+      provider: "sqlite", // or "pg" or "mysql"
     })
   })
 }
