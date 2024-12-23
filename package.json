@@ -1,5 +1,5 @@
 {
-  "name": "yy-back",
+  "name": "zz-back",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
