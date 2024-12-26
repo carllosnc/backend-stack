@@ -5,14 +5,24 @@ import { drizzle } from 'drizzle-orm/libsql';
 import { account, user, verification, session } from './db/auth-schema';
 import { origins } from './settings/origins'
 
-export function betterAuthSettings(tursoUrl: string, tursoToken: string) {
+export function betterAuthSettings(
+  tursoUrl: string,
+  tursoToken: string
+) {
   const db = drizzle({ connection: {
     url: tursoUrl,
     authToken: tursoToken
   }})
 
   return betterAuth({
+    advanced: {
+      defaultCookieAttributes: {
+        sameSite: "none",
+        secure: true,
+      }
+    },
     emailAndPassword: {
+      autoSignIn: true,
       enabled: true,
     },
     trustedOrigins: [
