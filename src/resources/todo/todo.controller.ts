@@ -1,13 +1,14 @@
 import { drizzle } from 'drizzle-orm/libsql';
 import { todoTable } from '../../db/todo-schema'
-import { bodyValidator, idValidator } from './todo.validator'
+import { bodyValidator, idValidator } from './todo.schema'
 import { eq } from 'drizzle-orm'
 import { Hono } from 'hono'
 import type { Bindings } from '../../bindings'
+import { describeGetAllTodos, describeAddOneTodo } from './todo.doc'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
-app.get('/', async (c) => {
+app.get('/', describeGetAllTodos, async (c) => {
   const db = drizzle({ connection: {
     url: c.env.TURSO_DATABASE_URL!,
     authToken: c.env.TURSO_AUTH_TOKEN!
@@ -20,7 +21,7 @@ app.get('/', async (c) => {
   return c.json(todos)
 })
 
-app.post('/', bodyValidator, async (c) => {
+app.post('/', bodyValidator, describeAddOneTodo, async (c) => {
   const db = drizzle({ connection: {
     url: c.env.TURSO_DATABASE_URL!,
     authToken: c.env.TURSO_AUTH_TOKEN!
@@ -43,7 +44,6 @@ app.delete('/:id', idValidator, async (c) => {
   }});
 
   const { id } = c.req.valid('param')
-
   await db.delete(todoTable).where(eq(todoTable.id, id))
 
   c.status(200)
