@@ -63,6 +63,24 @@ Generating the schema:
 bun run generate
 ```
 
+# Resources
+
+Basic structure for resources.
+
+```
+📂 resources
+|― 📂 todo
+   |― 📄 todo.controller.ts
+   |― 📄 todo.doc.ts
+   |― 📄 todo.schema.ts
+   |― 📄 todo.test.ts
+```
+
+- **controller** - verbs and actions
+- **doc** - documentation for openapi
+- **schema** - validation schemas
+- **test** - unitary tests
+
 ---
 
 Carlos Costa @ 2024
