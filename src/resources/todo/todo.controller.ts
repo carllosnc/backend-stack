@@ -4,7 +4,7 @@ import { bodyValidator, idValidator } from './todo.schema'
 import { eq } from 'drizzle-orm'
 import { Hono } from 'hono'
 import type { Bindings } from '../../bindings'
-import { describeGetAllTodos, describeAddOneTodo } from './todo.doc'
+import { describeGetAllTodos, describeAddOneTodo, describeDeleteOneTodo } from './todo.doc'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -37,7 +37,7 @@ app.post('/', bodyValidator, describeAddOneTodo, async (c) => {
   return c.json(result)
 })
 
-app.delete('/:id', idValidator, async (c) => {
+app.delete('/:id', idValidator, describeDeleteOneTodo, async (c) => {
   const db = drizzle({ connection: {
     url: c.env.TURSO_DATABASE_URL!,
     authToken: c.env.TURSO_AUTH_TOKEN!
