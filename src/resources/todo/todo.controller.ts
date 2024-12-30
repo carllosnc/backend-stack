@@ -6,9 +6,9 @@ import { Hono } from 'hono'
 import type { Bindings } from '../../bindings'
 import { describeGetAllTodos, describeAddOneTodo, describeDeleteOneTodo } from './todo.doc'
 
-const app = new Hono<{ Bindings: Bindings }>()
+const todos = new Hono<{ Bindings: Bindings }>()
 
-app.get('/', describeGetAllTodos, async (c) => {
+todos.get('/', describeGetAllTodos, async (c) => {
   const db = drizzle({ connection: {
     url: c.env.TURSO_DATABASE_URL!,
     authToken: c.env.TURSO_AUTH_TOKEN!
@@ -21,7 +21,7 @@ app.get('/', describeGetAllTodos, async (c) => {
   return c.json(todos)
 })
 
-app.post('/', bodyValidator, describeAddOneTodo, async (c) => {
+todos.post('/', bodyValidator, describeAddOneTodo, async (c) => {
   const db = drizzle({ connection: {
     url: c.env.TURSO_DATABASE_URL!,
     authToken: c.env.TURSO_AUTH_TOKEN!
@@ -37,7 +37,7 @@ app.post('/', bodyValidator, describeAddOneTodo, async (c) => {
   return c.json(result)
 })
 
-app.delete('/:id', idValidator, describeDeleteOneTodo, async (c) => {
+todos.delete('/:id', idValidator, describeDeleteOneTodo, async (c) => {
   const db = drizzle({ connection: {
     url: c.env.TURSO_DATABASE_URL!,
     authToken: c.env.TURSO_AUTH_TOKEN!
@@ -51,4 +51,4 @@ app.delete('/:id', idValidator, describeDeleteOneTodo, async (c) => {
   return c.json({ message: `Todo ${id} deleted` })
 })
 
-export default app
+export default todos
