@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
+    "database": "turso dev --db-file dev-db",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate"
   },
