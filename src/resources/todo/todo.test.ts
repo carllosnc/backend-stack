@@ -25,8 +25,6 @@ describe('/todos', () => {
       }
     }, MOCK_ENV)
 
-    const body = await res.json()
-
     expect(res.status).toBe(201)
   })
 })
