@@ -1,53 +1,39 @@
-import { drizzle } from 'drizzle-orm/libsql';
-import { todoTable } from '../../db/todo-schema'
 import { bodyValidator, idValidator } from './todo.schema'
-import { eq } from 'drizzle-orm'
 import { Hono } from 'hono'
 import type { Bindings } from '../../bindings'
-import { describeGetAllTodos, describeAddOneTodo, describeDeleteOneTodo } from './todo.doc'
+import {
+  describeGetAllTodos,
+  describeAddOneTodo,
+  describeDeleteOneTodo
+} from './todo.doc'
+import {
+  getAllTodos,
+  addOneTodo,
+  deleteOneTodo
+} from './todo.repository'
 
 const todos = new Hono<{ Bindings: Bindings }>()
 
 todos.get('/', describeGetAllTodos, async (c) => {
-  const db = drizzle({ connection: {
-    url: c.env.TURSO_DATABASE_URL!,
-    authToken: c.env.TURSO_AUTH_TOKEN!
-  }});
-
-  const todos = await db.select().from(todoTable)
+  const todos = await getAllTodos(c)
 
   c.status(200)
-
   return c.json(todos)
 })
 
 todos.post('/', bodyValidator, describeAddOneTodo, async (c) => {
-  const db = drizzle({ connection: {
-    url: c.env.TURSO_DATABASE_URL!,
-    authToken: c.env.TURSO_AUTH_TOKEN!
-  }});
-
   const { title } = c.req.valid('json')
-  const todo: typeof todoTable.$inferInsert = { title }
-
-  const result = await db.insert(todoTable).values(todo).returning()
+  const result = await addOneTodo(c, { title })
 
   c.status(201)
-
   return c.json(result)
 })
 
 todos.delete('/:id', idValidator, describeDeleteOneTodo, async (c) => {
-  const db = drizzle({ connection: {
-    url: c.env.TURSO_DATABASE_URL!,
-    authToken: c.env.TURSO_AUTH_TOKEN!
-  }});
-
   const { id } = c.req.valid('param')
-  await db.delete(todoTable).where(eq(todoTable.id, id))
+  await deleteOneTodo(c, id)
 
   c.status(200)
-
   return c.json({ message: `Todo ${id} deleted` })
 })
 
