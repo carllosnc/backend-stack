@@ -3,7 +3,7 @@
 import { useGetSession } from "@/hooks/use-get-sessions"
 import { PageLoading } from "@/components/page-loading"
 import { Button } from "@/components/ui/button"
-import { signOut } from "@/lib/auth"
+import { signOut } from "@/lib/auth-client"
 import { useRouter } from 'next/navigation'
 
 export default function Settings() {

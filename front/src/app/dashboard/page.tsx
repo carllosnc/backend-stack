@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { useGetSession } from "@/hooks/use-get-sessions";
 import { Button } from "@/components/ui/button"
 import { FaAngleDown } from "react-icons/fa";
-import { signOut } from "@/lib/auth"
+import { signOut } from "@/lib/auth-client"
 import { useRouter } from 'next/navigation'
 
 export default function Dashboard() {

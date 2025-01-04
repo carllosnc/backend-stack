@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/tabs';
 import { PageLoading } from "@/components/page-loading"
 
-import { authClient } from "@/lib/auth"
+import { authClient } from "@/lib/auth-client"
 import { useRouter } from 'next/navigation'
 import { useEffect } from "react";
 

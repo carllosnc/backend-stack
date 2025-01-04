@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signInSchema, SignInValues } from "@/lib/schema"
-import { authClient } from "@/lib/auth"
+import { authClient } from "@/lib/auth-client"
 import { Button } from "@/components/ui/button"
 import {
   Form,
