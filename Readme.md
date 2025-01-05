@@ -5,6 +5,7 @@
 - [Hono](https://github.com/honojs/hono)
 - [Next.js](https://github.com/vercel/next.js)
 - [Turso](https://turso.tech/)
+- [Cloudflare Workers](https://workers.cloudflare.com/)
 
 ---
 
