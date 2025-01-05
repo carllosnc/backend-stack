@@ -9,6 +9,12 @@ What's inside
 - Better-auth
 - Tailwind
 
+## Development
+
+```sh
+bun run dev
+```
+
 ---
 
 Carlos Costa @ 2024
