@@ -1,11 +1,12 @@
 {
-  "name": "zz-back",
+  "name": "backend_stack",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
     "database": "turso dev --db-file dev-db",
     "generate": "drizzle-kit generate",
-    "migrate": "drizzle-kit migrate"
+    "migrate": "drizzle-kit migrate",
+    "studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.2",

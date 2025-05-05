@@ -1,11 +1,89 @@
-# Hone stack
+# Backend stack
 
->hono for backend and next for frontend
+What's inside?
 
-- [Hono](https://github.com/honojs/hono)
-- [Next.js](https://github.com/vercel/next.js)
-- [Turso](https://turso.tech/)
-- [Cloudflare Workers](https://workers.cloudflare.com/)
+- Bun
+- Turso Database
+- Cloudflare Workers
+- Drizzle ORM
+- Hono
+- Zod
+- Drizzle
+- Better Auth
+
+## Installation
+
+Before start install **Bun** and **Turso**
+
+- Bun: [how to install](https://bun.sh/docs/installation)
+- Turso: [how to install](https://turso.tech/docs/installation)
+
+## Settings
+
+Create a `.env` and a `.dev.vars` file in the root of the project with the following variables:
+
+**.dev.vars**
+
+```sh
+TURSO_DATABASE_URL=
+TURSO_AUTH_TOKEN=
+
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=
+
+AUTH_GOOGLE_ID=
+AUTH_GOOGLE_SECRET=
+```
+
+## Development
+
+Running the server:
+```sh
+bun run dev
+```
+
+Running database server:
+```sh
+turso dev
+```
+
+Running the tests:
+```sh
+bun test
+```
+
+Running the migrations:
+```sh
+bun run --env-file=.dev.vars migrate
+```
+
+Generating the schema:
+```sh
+bun run generate
+```
+
+Open drizzle studio:
+```sh
+bun run --env-file=.dev.vars studio
+```
+
+# Resources
+
+Basic structure for resources.
+
+```
+📂 resources
+|― 📂 todo
+   |― 📄 todo.controller.ts
+   |― 📄 todo.doc.ts
+   |― 📄 todo.validator.ts
+   |― 📄 todo.test.ts
+```
+
+- **controller** - verbs and actions
+- **doc** - documentation for openapi
+- **validator** - validation schemas
+- **test** - unitary tests
 
 ---
 

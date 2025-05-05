@@ -9,7 +9,16 @@ import { apiReference } from '@scalar/hono-api-reference';
 
 const app = new Hono<{Bindings: Bindings }>()
 
-app.get('/', (c) => c.json({ message: 'Hello World!' }))
+app.get('/', (c) => {
+
+  return c.json({
+    app: "Hone stack",
+    description: "Hone stack boylerplate",
+    url: c.env.APP_URL,
+    open_api: `${c.env.APP_URL}/openapi`,
+    docs: `${c.env.APP_URL}/docs`,
+  })
+})
 
 app.use(
 	"/api/auth/**", // or replace with "*" to enable cors for all routes
@@ -26,17 +35,17 @@ app.use(
 );
 
 app.on(["POST", "GET"], "/api/auth/**", async (c) => {
-  const auth = betterAuthSettings(
-    c.env.TURSO_DATABASE_URL,
-    c.env.TURSO_AUTH_TOKEN,
-  )
+  const auth = betterAuthSettings({
+    tursoUrl: c.env.TURSO_DATABASE_URL,
+    tursoToken: c.env.TURSO_AUTH_TOKEN,
+    authGoogleId: c.env.AUTH_GOOGLE_ID,
+    authGoogleSecret: c.env.AUTH_GOOGLE_SECRET,
+  })
 
   const result = await auth.handler(c.req.raw)
 
   return result
 });
-
-app.route('/todos', todo)
 
 app.get(
   "/openapi",
@@ -45,11 +54,11 @@ app.get(
       info: {
         title: "Hono",
         version: "1.0.0",
-        description: "ZZ-Back boilerplate",
+        description: "Hone stack boylerplate",
       },
       servers: [
         {
-          url: "http://localhost:8787",
+          url: process.env.APP_URL as string,
           description: "Local server",
         },
       ],
@@ -66,5 +75,11 @@ app.get(
     },
   })
 );
+
+/*=========*/
+// ROUTES
+/*=========*/
+
+app.route('/todos', todo)
 
 export default app

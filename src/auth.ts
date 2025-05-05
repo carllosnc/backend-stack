@@ -5,16 +5,26 @@ import { drizzle } from 'drizzle-orm/libsql';
 import { account, user, verification, session } from './db/auth-schema';
 import { origins } from './settings/origins'
 
-export function betterAuthSettings(
-  tursoUrl: string,
+type Props = {
+  tursoUrl: string
   tursoToken: string
-) {
+  authGoogleId: string
+  authGoogleSecret: string
+}
+
+export function betterAuthSettings(props: Props) {
   const db = drizzle({ connection: {
-    url: tursoUrl,
-    authToken: tursoToken
+    url: props.tursoUrl,
+    authToken: props.tursoToken,
   }})
 
   return betterAuth({
+    socialProviders: {
+      google: {
+        clientId: props.authGoogleId,
+        clientSecret: props.authGoogleSecret,
+      },
+    },
     advanced: {
       defaultCookieAttributes: {
         sameSite: "none",
