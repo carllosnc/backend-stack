@@ -2,9 +2,9 @@
 
 What's inside?
 
-- Bun
+- Bun as package management
+- Cloudflare Workers as serverless platform
 - Turso Database
-- Cloudflare Workers
 - Drizzle ORM
 - Hono
 - Zod
