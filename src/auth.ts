@@ -19,8 +19,10 @@ export function betterAuthSettings(props: Props) {
   }})
 
   return betterAuth({
+    saveSession: true,
     socialProviders: {
       google: {
+        prompt: "select_account",
         clientId: props.authGoogleId,
         clientSecret: props.authGoogleSecret,
       },
