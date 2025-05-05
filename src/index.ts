@@ -10,7 +10,6 @@ import { apiReference } from '@scalar/hono-api-reference';
 const app = new Hono<{Bindings: Bindings }>()
 
 app.get('/', (c) => {
-
   return c.json({
     app: "Hone stack",
     description: "Hone stack boylerplate",
