@@ -20,7 +20,7 @@ Before start install **Bun** and **Turso**
 
 ## Settings
 
-Create a `.env` and a `.dev.vars` file in the root of the project with the following variables:
+Create a `.dev.vars` file in the root of the project with the following variables:
 
 **.dev.vars**
 
