@@ -52,12 +52,12 @@ Running the tests:
 bun test
 ```
 
-Running the migrations:
+Applying database migrations:
 ```sh
 bun run --env-file=.dev.vars migrate
 ```
 
-Generating the schema:
+Generating database schema:
 ```sh
 bun run generate
 ```
