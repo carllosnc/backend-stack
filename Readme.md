@@ -25,6 +25,8 @@ Create a `.env` and a `.dev.vars` file in the root of the project with the follo
 **.dev.vars**
 
 ```sh
+APP_URL=
+
 TURSO_DATABASE_URL=
 TURSO_AUTH_TOKEN=
 
