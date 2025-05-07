@@ -8,6 +8,20 @@
       "when": 1734880273286,
       "tag": "0000_third_killmonger",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1746606429721,
+      "tag": "0001_past_moonstone",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1746607155123,
+      "tag": "0002_dapper_synch",
+      "breakpoints": true
     }
   ]
 }
