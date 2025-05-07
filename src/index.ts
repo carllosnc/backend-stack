@@ -6,6 +6,10 @@ import { cors } from "hono/cors";
 import { origins } from './settings/origins'
 import { openAPISpecs } from 'hono-openapi';
 import { apiReference } from '@scalar/hono-api-reference';
+import { bearerAuth } from 'hono/bearer-auth'
+import { drizzle } from 'drizzle-orm/libsql';
+import { account } from './db/auth-schema';
+import { eq } from 'drizzle-orm';
 
 const app = new Hono<{Bindings: Bindings }>()
 
@@ -18,6 +22,19 @@ app.get('/', (c) => {
     docs: `${c.env.APP_URL}/docs`,
   })
 })
+
+app.use('/todos', bearerAuth({
+  verifyToken: async (token, c) => {
+    const db = drizzle({ connection: {
+      url: c.env.TURSO_DATABASE_URL,
+      authToken: c.env.TURSO_AUTH_TOKEN,
+    }})
+
+    const accountResult = await db.select().from(account).where(eq(account.idToken, token))
+
+    return token === accountResult[0].idToken
+  },
+}))
 
 app.use(
 	"/api/auth/**", // or replace with "*" to enable cors for all routes
