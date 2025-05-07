@@ -1,4 +1,5 @@
 export type Bindings = {
+  DEV_MODE: string
   APP_URL: string
   TURSO_DATABASE_URL: string
   TURSO_AUTH_TOKEN: string
