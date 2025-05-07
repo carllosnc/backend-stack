@@ -90,8 +90,6 @@ export const signIn = async () => {
       callbackURL: process.env.CALLBACK_URL,
       provider: "google"
   })
-
-  console.log(data)
 }
 ```
 
