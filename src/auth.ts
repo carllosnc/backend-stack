@@ -1,9 +1,11 @@
 import 'dotenv/config';
 import { betterAuth } from "better-auth";
+import { customSession } from "better-auth/plugins"
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { drizzle } from 'drizzle-orm/libsql';
 import { account, user, verification, session } from './db/auth-schema';
 import { origins } from './settings/origins'
+import { eq } from 'drizzle-orm'
 
 type Props = {
   tursoUrl: string
@@ -20,6 +22,20 @@ export function betterAuthSettings(props: Props) {
 
   return betterAuth({
     saveSession: true,
+    plugins: [
+      customSession(async ({ session, user }) => {
+        const accountResult = await db.select().from(account).where(eq(account.userId, user.id))
+
+        return {
+          jwt_token: accountResult[0].idToken,
+          user: {
+              ...user,
+              newField: "newField",
+          },
+          session
+        };
+      }),
+    ],
     socialProviders: {
       google: {
         prompt: "select_account",
@@ -51,4 +67,3 @@ export function betterAuthSettings(props: Props) {
     })
   })
 }
-
