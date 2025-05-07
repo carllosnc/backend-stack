@@ -1,15 +1,16 @@
 # Backend stack
 
-What's inside?
+>this project is a tiny boiler for create my own backend projects
 
-- Bun as package management
-- Cloudflare Workers as serverless platform
-- Turso Database
-- Drizzle ORM
-- Hono
-- Zod
-- Drizzle
-- Better Auth
+**What's inside?**
+
+- [Bun](https://bun.sh/) as package management
+- [Cloudflare Workers](https://workers.cloudflare.com/) as serverless platform
+- [Turso Database](https://turso.tech/) as serverless database
+- [Drizzle ORM](https://orm.drizzle.team/)
+- [Hono](https://hono.dev/)
+- [Zod](https://zod.dev/)
+- [Better Auth](https://github.com/betterauth/betterauth)
 
 ## Installation
 
@@ -69,7 +70,32 @@ Open drizzle studio:
 bun run --env-file=.dev.vars studio
 ```
 
-# Resources
+## Client Authentication
+
+This is the basic configuration to authenticate with the backend.
+
+```ts
+import { createAuthClient } from "better-auth/react"
+import { jwtClient } from "better-auth/client/plugins";
+
+export const authClient = createAuthClient({
+  plugins: [
+    jwtClient()
+  ],
+  baseURL: process.env.BACKEND_URL,
+})
+
+export const signIn = async () => {
+  const data = await authClient.signIn.social({
+      callbackURL: process.env.CALLBACK_URL,
+      provider: "google"
+  })
+
+  console.log(data)
+}
+```
+
+## Resources
 
 Basic structure for resources.
 
