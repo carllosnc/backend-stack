@@ -9,7 +9,6 @@ import { drizzle } from 'drizzle-orm/libsql';
 import { account } from './db/auth-schema';
 import { eq } from 'drizzle-orm';
 import { docs } from '@/settings/docs'
-import { showRoutes } from 'hono/dev'
 
 const app = new Hono<{Bindings: Bindings }>()
 
@@ -75,7 +74,5 @@ app.get('/', (c) => {
 
 app.route('/docs', docs)
 app.route('/res/v1/todos', todo)
-
-showRoutes(app)
 
 export default app
