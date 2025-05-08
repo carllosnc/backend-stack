@@ -1,6 +1,6 @@
 import { bodyValidator, idValidator } from './todo.validator'
 import { Hono } from 'hono'
-import type { Bindings } from '../../bindings'
+import type { Bindings } from '@/bindings'
 
 import {
   describeGetAllTodos,
