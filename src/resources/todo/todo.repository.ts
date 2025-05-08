@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/libsql';
 import { Context } from 'hono';
-import { todoTable } from '../../db/todo-schema'
+import { todoTable } from '@/db/todo-schema'
 import { eq } from 'drizzle-orm'
 
 export function dbConnection(c: Context) {
