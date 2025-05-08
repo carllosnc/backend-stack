@@ -29,8 +29,8 @@ export function betterAuthSettings(props: Props) {
         return {
           jwt_token: accountResult[0].idToken,
           user: {
-              ...user,
-              newField: "newField",
+            ...user,
+            newField: "newField",
           },
           session
         };
