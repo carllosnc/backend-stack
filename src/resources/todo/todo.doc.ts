@@ -1,6 +1,6 @@
 import { describeRoute } from "hono-openapi";
 import { resolver } from 'hono-openapi/zod'
-import { todoTable } from '../../db/todo-schema'
+import { todoTable } from '@/db/todo-schema'
 import { createSelectSchema } from 'drizzle-zod';
 import  { z } from 'zod';
 
