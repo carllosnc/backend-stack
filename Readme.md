@@ -57,17 +57,17 @@ bun test
 
 Applying database migrations:
 ```sh
-bun run --env-file=.dev.vars migrate
+bun run --env-file=.dev.vars db:migrate
 ```
 
 Generating database schema:
 ```sh
-bun run generate
+bun run db:generate
 ```
 
 Open drizzle studio:
 ```sh
-bun run --env-file=.dev.vars studio
+bun run --env-file=.dev.vars db:studio
 ```
 
 ## Client Authentication
