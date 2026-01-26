@@ -22,7 +22,7 @@ jobs:
         run: bun install
 
       - name: Run migrations
-        run: bun db:migrate
+        run: bun run db:migrate
 
       - name: Run tests
         run: bun test
