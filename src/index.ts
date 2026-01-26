@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { origins } from './config/origins'
 import { limiter } from './config/rate-limit'
-
+import { todoController } from './resources/todo.controller'
 import { z } from 'zod'
 import { zValidator } from '@hono/zod-validator'
 
@@ -43,7 +43,6 @@ app.post(
   }
 )
 
-import { todoController } from './resources/todo.controller'
 app.route('/api/todos', todoController)
 
 export default app
