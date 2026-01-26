@@ -1,5 +1,7 @@
 # Backend Stack
 
+[![CI](https://github.com/carllosnc/backend-stack/actions/workflows/ci.yml/badge.svg)](https://github.com/carllosnc/backend-stack/actions/workflows/ci.yml)
+
 A modern, high-performance backend template built with **Bun**, **Hono**, **Drizzle ORM**, and **SQLite**.
 
 ## Features
