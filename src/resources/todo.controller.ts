@@ -1,7 +1,12 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { todoRepository } from "./todo.repository";
-import { insertTodoSchema, updateTodoSchema } from "./todo.validator";
+import {
+  insertTodoSchema,
+  updateTodoSchema,
+  idParamSchema,
+} from "./todo.validator";
+import { validatorHook } from "../hooks/validator.hook";
 
 const todoController = new Hono();
 
@@ -10,45 +15,59 @@ todoController.get("/", async (c) => {
   return c.json(todos);
 });
 
-todoController.get("/:id", async (c) => {
-  const id = Number(c.req.param("id"));
-  if (isNaN(id)) return c.json({ error: "Invalid ID" }, 400);
+todoController.get(
+  "/:id",
+  zValidator("param", idParamSchema, validatorHook),
+  async (c) => {
+    const { id } = c.req.valid("param");
 
-  const todo = await todoRepository.findById(id);
-  if (!todo) return c.json({ error: "Todo not found" }, 404);
+    const todo = await todoRepository.findById(id);
+    if (!todo) return c.json({ error: "Todo not found" }, 404);
 
-  return c.json(todo);
-});
-
-todoController.post("/", zValidator("json", insertTodoSchema), async (c) => {
-  const data = c.req.valid("json");
-  try {
-    const todo = await todoRepository.create(data);
-    return c.json(todo, 201);
-  } catch (error) {
-    return c.json({ error: "Failed to create todo" }, 500);
+    return c.json(todo);
   }
-});
+);
 
-todoController.patch("/:id", zValidator("json", updateTodoSchema), async (c) => {
-  const id = Number(c.req.param("id"));
-  if (isNaN(id)) return c.json({ error: "Invalid ID" }, 400);
+todoController.post(
+  "/",
+  zValidator("json", insertTodoSchema, validatorHook),
+  async (c) => {
+    const data = c.req.valid("json");
+    try {
+      const todo = await todoRepository.create(data);
+      return c.json(todo, 201);
+    } catch (error) {
+      return c.json({ error: "Failed to create todo" }, 500);
+    }
+  }
+);
 
-  const data = c.req.valid("json");
-  const todo = await todoRepository.update(id, data);
-  if (!todo) return c.json({ error: "Todo not found" }, 404);
+todoController.patch(
+  "/:id",
+  zValidator("param", idParamSchema, validatorHook),
+  zValidator("json", updateTodoSchema, validatorHook),
+  async (c) => {
+    const { id } = c.req.valid("param");
+    const data = c.req.valid("json");
 
-  return c.json(todo);
-});
+    const todo = await todoRepository.update(id, data);
+    if (!todo) return c.json({ error: "Todo not found" }, 404);
 
-todoController.delete("/:id", async (c) => {
-  const id = Number(c.req.param("id"));
-  if (isNaN(id)) return c.json({ error: "Invalid ID" }, 400);
+    return c.json(todo);
+  }
+);
 
-  const deleted = await todoRepository.delete(id);
-  if (!deleted) return c.json({ error: "Todo not found" }, 404);
+todoController.delete(
+  "/:id",
+  zValidator("param", idParamSchema, validatorHook),
+  async (c) => {
+    const { id } = c.req.valid("param");
 
-  return c.json({ success: true });
-});
+    const deleted = await todoRepository.delete(id);
+    if (!deleted) return c.json({ error: "Todo not found" }, 404);
+
+    return c.json({ success: true });
+  }
+);
 
 export { todoController };
