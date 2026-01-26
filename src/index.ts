@@ -3,6 +3,9 @@ import { cors } from 'hono/cors'
 import { origins } from './config/origins'
 import { limiter } from './config/rate-limit'
 
+import { z } from 'zod'
+import { zValidator } from '@hono/zod-validator'
+
 const app = new Hono()
 
 app.use('*', limiter)
@@ -21,5 +24,26 @@ app.get('/', (c) => {
     version: '1.0.0',
   })
 })
+
+app.post(
+  '/api/users',
+  zValidator(
+    'json',
+    z.object({
+      name: z.string().min(1),
+      email: z.string().email(),
+    })
+  ),
+  (c) => {
+    const { name, email } = c.req.valid('json')
+    return c.json({
+      success: true,
+      data: { name, email },
+    }, 201)
+  }
+)
+
+import { todoController } from './resources/todo.controller'
+app.route('/api/todos', todoController)
 
 export default app
