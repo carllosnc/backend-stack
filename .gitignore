@@ -6,3 +6,5 @@ node_modules/
 dist/
 drizzle/
 test_output.txt
+docker-compose.override.yml
+.dockerignore
