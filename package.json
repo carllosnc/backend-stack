@@ -1,0 +1,14 @@
+{
+  "name": "backend-stack",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "hono": "^4.11.6",
+    "hono-rate-limiter": "^0.5.3"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
