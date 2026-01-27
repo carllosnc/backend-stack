@@ -10,6 +10,12 @@ const ErrorSchema = z.object({
   error: z.string(),
 });
 
+// Schema for validation error responses
+const ValidationErrorSchema = z.object({
+  success: z.boolean(),
+  errors: z.array(z.any()),
+});
+
 // Schema for success response
 const SuccessSchema = z.object({
   success: z.boolean(),
@@ -91,6 +97,14 @@ export const createTodoRoute = createRoute({
       },
       description: "Todo created successfully",
     },
+    400: {
+      content: {
+        "application/json": {
+          schema: ValidationErrorSchema,
+        },
+      },
+      description: "Validation error",
+    },
     500: {
       content: {
         "application/json": {
@@ -126,6 +140,14 @@ export const updateTodoRoute = createRoute({
         },
       },
       description: "Todo updated successfully",
+    },
+    400: {
+      content: {
+        "application/json": {
+          schema: ValidationErrorSchema,
+        },
+      },
+      description: "Validation error",
     },
     404: {
       content: {

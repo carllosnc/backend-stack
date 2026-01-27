@@ -7,8 +7,11 @@ import {
   updateTodoRoute,
   deleteTodoRoute,
 } from "./todo.orcp";
+import { validatorHook } from "../hooks/validator.hook";
 
-const todoController = new OpenAPIHono();
+const todoController = new OpenAPIHono({
+  defaultHook: validatorHook,
+});
 
 // Get all todos
 todoController.openapi(getAllTodosRoute, async (c) => {

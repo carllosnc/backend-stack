@@ -19,6 +19,21 @@ describe("Todo API", () => {
     createdTodoId = data.id;
   });
 
+  test("POST /api/todos should return 400 for invalid data", async () => {
+    const res = await app.request("/api/todos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: "" }), // Invalid: Empty title but min length is 1
+    });
+
+    expect(res.status).toBe(400);
+    const data = await res.json();
+    expect(data.success).toBe(false);
+    expect(data.errors).toBeDefined();
+    expect(Array.isArray(data.errors)).toBe(true);
+    expect(data.errors[0].message).toBe("Title is required");
+  });
+
   test("GET /api/todos should return a list of todos", async () => {
     const res = await app.request("/api/todos");
     expect(res.status).toBe(200);
