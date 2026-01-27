@@ -1,9 +1,10 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { cors } from 'hono/cors'
-import { swaggerUI } from '@hono/swagger-ui'
+import { Scalar } from '@scalar/hono-api-reference'
 import { origins } from './config/origins'
 import { limiter } from './config/rate-limit'
 import { todoController } from './resources/todo.controller'
+import { prettyJSON } from 'hono/pretty-json'
 
 const app = new OpenAPIHono()
 
@@ -15,6 +16,8 @@ app.use(
     origin: origins,
   })
 )
+
+app.use('*', prettyJSON())
 
 app.get('/', (c) => {
   return c.json({
@@ -43,8 +46,16 @@ app.doc('/api/doc', {
   ],
 })
 
-// Swagger UI endpoint
-app.get('/api/ui', swaggerUI({ url: '/api/doc' }))
+// Scalar API Reference endpoint (modern, recommended)
+app.get(
+  '/api/reference',
+  Scalar({
+    theme: 'purple',
+    spec: {
+      url: '/api/doc',
+    },
+  })
+)
 
 export default app
 export type AppType = typeof app
