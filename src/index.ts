@@ -5,9 +5,18 @@ import { origins } from './config/origins'
 import { limiter } from './config/rate-limit'
 import { todoController } from './resources/todo.controller'
 import { prettyJSON } from 'hono/pretty-json'
+import { secureHeaders } from 'hono/secure-headers'
 
 const app = new OpenAPIHono()
 
+app.use('*', secureHeaders({
+  contentSecurityPolicy: {
+    defaultSrc: ["'self'", "https:", "'unsafe-inline'"],
+    scriptSrc: ["'self'", "https:", "'unsafe-inline'"],
+    styleSrc: ["'self'", "https:", "'unsafe-inline'"],
+    imgSrc: ["'self'", "data:", "https:"],
+  },
+}))
 app.use('*', limiter)
 
 app.use(
