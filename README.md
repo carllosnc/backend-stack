@@ -11,11 +11,13 @@ A modern, high-performance backend template built with **Bun**, **Hono**, **Driz
 - **Database**: [SQLite](https://bun.sh/docs/api/sqlite) via `bun:sqlite` for local development.
 - **ORM**: [Drizzle ORM](https://orm.drizzle.team/) for type-safe database interactions.
 - **Validation**: [Zod](https://zod.dev/) for robust request body and schema validation.
-- **OpenAPI**: Automatic OpenAPI 3.0 documentation with **Swagger UI**.
+- **OpenAPI**: Automatic OpenAPI 3.0 documentation with **Scalar API Reference**.
 - **RPC Client**: Type-safe API client using Hono's RPC feature.
 - **Security**:
-  - Configurable **CORS** middleware.
-  - **Rate Limiting** to prevent abuse.
+  - **Secure Headers**: comprehensive security headers enabled using `hono/secure-headers` (similar to Helmet).
+  - **CSP**: configured Content Security Policy to prevent XSS.
+  - **CORS**: Configurable Cross-Origin Resource Sharing.
+  - **Rate Limiting**: built-in middleware to prevent abuse.
 - **Testing**: Integrated **Bun Test** suite with integration tests for all resources.
 
 ## Tech Stack
@@ -112,7 +114,7 @@ The `Todo` resource serves as a reference implementation:
 
 ### Documentation
 - `GET /api/doc`: OpenAPI 3.0 specification (JSON).
-- `GET /api/ui`: Interactive Swagger UI documentation.
+- `GET /api/ui`: Interactive Scalar API Reference.
 
 ## API Documentation & RPC Client
 
@@ -120,7 +122,7 @@ This project includes full OpenAPI 3.0 documentation and supports Hono's type-sa
 
 ### Interactive Documentation
 
-Visit `http://localhost:3000/api/ui` to access the Swagger UI where you can:
+Visit `http://localhost:3000/api/ui` to access the Scalar API Reference where you can:
 - Browse all available endpoints
 - View request/response schemas
 - Test API calls directly from your browser
