@@ -11,6 +11,8 @@ A modern, high-performance backend template built with **Bun**, **Hono**, **Driz
 - **Database**: [SQLite](https://bun.sh/docs/api/sqlite) via `bun:sqlite` for local development.
 - **ORM**: [Drizzle ORM](https://orm.drizzle.team/) for type-safe database interactions.
 - **Validation**: [Zod](https://zod.dev/) for robust request body and schema validation.
+- **OpenAPI**: Automatic OpenAPI 3.0 documentation with **Swagger UI**.
+- **RPC Client**: Type-safe API client using Hono's RPC feature.
 - **Security**:
   - Configurable **CORS** middleware.
   - **Rate Limiting** to prevent abuse.
@@ -19,6 +21,7 @@ A modern, high-performance backend template built with **Bun**, **Hono**, **Driz
 ## Tech Stack
 
 - **Hono** (Routing & Middleware)
+- **Hono OpenAPI** (OpenAPI Documentation & RPC)
 - **Bun SQLite** (Native SQLite Driver)
 - **Drizzle ORM** (Database Tooling)
 - **Zod** (Validation)
@@ -103,6 +106,38 @@ The `Todo` resource serves as a reference implementation:
 - `POST /api/todos`: Create a new todo.
 - `PATCH /api/todos/:id`: Update a todo.
 - `DELETE /api/todos/:id`: Delete a todo.
+
+### Documentation
+- `GET /api/doc`: OpenAPI 3.0 specification (JSON).
+- `GET /api/ui`: Interactive Swagger UI documentation.
+
+## API Documentation & RPC Client
+
+This project includes full OpenAPI 3.0 documentation and supports Hono's type-safe RPC client.
+
+### Interactive Documentation
+
+Visit `http://localhost:3000/api/ui` to access the Swagger UI where you can:
+- Browse all available endpoints
+- View request/response schemas
+- Test API calls directly from your browser
+
+### Type-Safe RPC Client
+
+You can use Hono's RPC client for fully type-safe API calls from your frontend:
+
+```typescript
+import { hc } from 'hono/client'
+import type { AppType } from './src/index'
+
+const client = hc<AppType>('http://localhost:3000')
+
+// Fully typed API calls with autocomplete
+const res = await client.api.todos.$get()
+const todos = await res.json() // TypeScript knows the exact shape
+```
+
+See [RPC_USAGE.md](./RPC_USAGE.md) for detailed examples.
 
 ## Scripts
 
