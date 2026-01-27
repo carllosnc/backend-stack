@@ -77,15 +77,17 @@ Each resource typically consists of the following files:
 - **`[resource].schema.ts`**: Defines the database table using Drizzle ORM.
 - **`[resource].validator.ts`**: Contains Zod schemas for request validation (Insert, Update) and type definitions.
 - **`[resource].repository.ts`**: Encapsulates all database queries and data logic.
+- **`[resource].orcp.ts`**: Defines OpenAPI route configurations with request/response schemas.
 - **`[resource].controller.ts`**: Defines the Hono routes and handles HTTP requests/responses.
 - **`[resource].test.ts`**: Integrated tests for the resource's endpoints.
 
 ### Why this pattern?
 
-1. **Separation of Concerns**: Database logic is isolated from HTTP handling.
+1. **Separation of Concerns**: Database logic is isolated from HTTP handling, and OpenAPI configurations are separated from route handlers.
 2. **Type Safety**: TypeScript types are shared across the repository and controller, ensuring end-to-end type safety.
-3. **Testability**: Each resource can be tested in isolation with its own test suite.
-4. **Consistency**: New features can be added by following this predictable blueprint.
+3. **API Documentation**: OpenAPI route definitions provide automatic, always-up-to-date API documentation.
+4. **Testability**: Each resource can be tested in isolation with its own test suite.
+5. **Consistency**: New features can be added by following this predictable blueprint.
 
 ### Example: Todo Resource
 
@@ -93,7 +95,8 @@ The `Todo` resource serves as a reference implementation:
 - **Schema**: Defines the `todos` table with fields like `title` and `completed`.
 - **Validation**: Uses `drizzle-zod` to automatically generate validation schemas from the table definition, adding custom refinements where needed.
 - **Repository**: Provides a clean interface for CRUD operations, abstracting the Drizzle queries.
-- **Controller**: Exposes RESTful endpoints and uses the `zValidator` middleware to ensure all incoming data is valid before reaching the repository.
+- **OpenAPI Routes**: Defines all route configurations with full OpenAPI 3.0 specifications for automatic documentation.
+- **Controller**: Exposes RESTful endpoints with handlers that implement the business logic for each route.
 
 ## API Endpoints
 
