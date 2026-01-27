@@ -48,7 +48,7 @@ app.doc('/api/doc', {
 
 // Scalar API Reference endpoint (modern, recommended)
 app.get(
-  '/api/reference',
+  '/api/ui',
   Scalar({
     theme: 'purple',
     spec: {
