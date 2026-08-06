@@ -7,7 +7,10 @@ describe("Todo API", () => {
   test("POST /api/todos should create a new todo", async () => {
     const res = await app.request("/api/todos", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "x-test-rate-limit-key": "todo-test"
+      },
       body: JSON.stringify({ title: "Test Todo" }),
     });
 
@@ -22,7 +25,10 @@ describe("Todo API", () => {
   test("POST /api/todos should return 400 for invalid data", async () => {
     const res = await app.request("/api/todos", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "x-test-rate-limit-key": "todo-test"
+      },
       body: JSON.stringify({ title: "" }), // Invalid: Empty title but min length is 1
     });
 
@@ -35,7 +41,9 @@ describe("Todo API", () => {
   });
 
   test("GET /api/todos should return a list of todos", async () => {
-    const res = await app.request("/api/todos");
+    const res = await app.request("/api/todos", {
+      headers: { "x-test-rate-limit-key": "todo-test" }
+    });
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(Array.isArray(data)).toBe(true);
@@ -43,7 +51,9 @@ describe("Todo API", () => {
   });
 
   test("GET /api/todos/:id should return a specific todo", async () => {
-    const res = await app.request(`/api/todos/${createdTodoId}`);
+    const res = await app.request(`/api/todos/${createdTodoId}`, {
+      headers: { "x-test-rate-limit-key": "todo-test" }
+    });
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data.id).toBe(createdTodoId);
@@ -53,7 +63,10 @@ describe("Todo API", () => {
   test("PATCH /api/todos/:id should update a todo", async () => {
     const res = await app.request(`/api/todos/${createdTodoId}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "x-test-rate-limit-key": "todo-test"
+      },
       body: JSON.stringify({ completed: true }),
     });
 
@@ -65,6 +78,7 @@ describe("Todo API", () => {
   test("DELETE /api/todos/:id should delete a todo", async () => {
     const res = await app.request(`/api/todos/${createdTodoId}`, {
       method: "DELETE",
+      headers: { "x-test-rate-limit-key": "todo-test" }
     });
 
     expect(res.status).toBe(200);
@@ -72,7 +86,10 @@ describe("Todo API", () => {
     expect(data.success).toBe(true);
 
     // Verify it's gone
-    const checkRes = await app.request(`/api/todos/${createdTodoId}`);
+    // Verify it's gone
+    const checkRes = await app.request(`/api/todos/${createdTodoId}`, {
+      headers: { "x-test-rate-limit-key": "todo-test" }
+    });
     expect(checkRes.status).toBe(404);
   });
 });
